@@ -14,10 +14,26 @@ model product {
   id Int    @id @default(autoincrement())
   productname String @unique
   brandname String
-  price Decimal
-  image Bytes
+  price Float
+  image String
+  addedProducts addedProduct[]
+}
+
+model addedProduct {
+  id Int @id @default(autoincrement())
+  quantity Int
+  products product[]
+}
+
+model article{
+  id Int @id @default(autoincrement())
+  image String
+  title String
+  content String @db.VarChar (500)
+
 
 }
+
 
 
 // npx prisma migrate dev --name init

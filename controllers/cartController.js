@@ -1,12 +1,12 @@
-const productService = require('../services/shopService');
+const cartService = require('../services/cartService');
 
-// get all products
-async function getProducts(req, res) {
+// get all added products
+async function getCart(req, res) {
   try {
-    const product = await productService.getProducts();
+    const addedProduct = await cartService.getCart();
     res.status(200).json({
-      message: "Successfully fetched all products",
-      data: product
+      message: "Successfully fetched all added products in cart",
+      data: addedProduct
     });
   } catch (error) {
     console.error(error);
@@ -15,34 +15,34 @@ async function getProducts(req, res) {
 }
 
 
-// Create a new product
-async function createProduct(req, res) {
-  try {
-    const productCreated = await productService.createProduct(req.body);
-    res.status(201).json({ productCreated });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
+// add product to cart
+// async function addToCart(req, res) {
+//   try {
+//     const addedProductId = await cartService.addToCart(req.body);
+//     res.status(201).json({ addedProductId });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
 
 // Get a product by ID
-async function getProductById(req, res) {
-  const { productId } = req.params;
-  try {
-    const product = await productService.getProductById(productId);
-    if (!product) {
-      return res.status(404).json({ error: 'product not found' });
-    }
-    res.status(200).json({
-      message: "Successfully fetched product",
-      data: product
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
+// async function getProductById(req, res) {
+//   const { productId } = req.params;
+//   try {
+//     const product = await productService.getProductById(productId);
+//     if (!product) {
+//       return res.status(404).json({ error: 'product not found' });
+//     }
+//     res.status(200).json({
+//       message: "Successfully fetched product",
+//       data: product
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
 
 // Update a product by ID
 // async function updateProductById(req, res) {
@@ -92,9 +92,7 @@ async function getProductById(req, res) {
 // }
 
 module.exports = {
-  getProducts,
-  createProduct,
-  getProductById
-//   updateProductById,
-//   deleteProductById,
+  getCart,
+  // addToCart
+
 };

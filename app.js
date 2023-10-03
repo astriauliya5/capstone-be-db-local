@@ -2,24 +2,33 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { shopRoutes } = require('./routes/shopRoutes');
+const { cartRoutes } = require('./routes/cartRoutes');
+const { blogRoutes } = require('./routes/blogRoutes')
 const app = express();
 // const { logger } = require('./middleware/logger');
-const PORT = 4001 || process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// middleware buatan sendiri
-// app.use(logger)
-
 // Routes
-const apiRouter = express.Router();
-app.use('/api', apiRouter);
+const shopRouter = express.Router();
+app.use('/', shopRouter);
 
-// /api/users
-apiRouter.use('/shop', shopRoutes);
+const cartRouter = express.Router();
+app.use('/', cartRouter);
+
+const blogRouter = express.Router();
+app.use('/', blogRouter)
+
+// /shop
+shopRouter.use('/shop', shopRoutes);
+// /cart
+cartRouter.use('/cart', cartRoutes);
+// /blog
+blogRouter.use('/blog', blogRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -28,4 +37,4 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(PORT, () => console.log('Server ready on port:', PORT));
+app.listen(PORT, () => console.log(`Server ready on port: ${PORT}`));
